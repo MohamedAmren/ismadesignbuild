@@ -1,0 +1,10 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="300" fill="#EA580C"/>
+  <rect x="50" y="50" width="300" height="200" fill="#ffffff" opacity="0.1"/>
+  <text x="200" y="140" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="24" font-weight="bold">Retail Space</text>
+  <text x="200" y="170" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16">Project 4</text>
+  <rect x="100" y="100" width="200" height="10" fill="white" opacity="0.3"/>
+  <rect x="100" y="120" width="200" height="10" fill="white" opacity="0.3"/>
+  <rect x="100" y="140" width="200" height="10" fill="white" opacity="0.3"/>
+  <rect x="100" y="160" width="200" height="10" fill="white" opacity="0.3"/>
+</svg>

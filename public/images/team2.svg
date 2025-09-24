@@ -1,0 +1,9 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="300" fill="#fef3c7"/>
+  <circle cx="150" cy="120" r="40" fill="#f59e0b"/>
+  <ellipse cx="150" cy="220" rx="60" ry="40" fill="#f59e0b"/>
+  <circle cx="135" cy="110" r="3" fill="#92400e"/>
+  <circle cx="165" cy="110" r="3" fill="#92400e"/>
+  <path d="M 140 130 Q 150 140 160 130" stroke="#92400e" stroke-width="2" fill="none"/>
+  <text x="150" y="280" text-anchor="middle" fill="#92400e" font-family="Arial, sans-serif" font-size="14" font-weight="bold">Team Member 2</text>
+</svg>

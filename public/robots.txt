@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://ismadesignbuild.com
+
+# Sitemaps
+Sitemap: https://ismadesignbuild.com/sitemap.xml

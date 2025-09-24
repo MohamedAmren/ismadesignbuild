@@ -1,0 +1,15 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" style="stop-color:#FBBF24;stop-opacity:0.9" />
+<stop offset="100%" style="stop-color:#F59E0B;stop-opacity:0.7" />
+</linearGradient>
+</defs>
+<rect width="1920" height="1080" fill="#FFFBEB"/>
+<rect x="0" y="0" width="1920" height="1080" fill="url(#gradient)"/>
+<rect x="200" y="200" width="400" height="600" fill="#FFFFFF" opacity="0.3"/>
+<rect x="700" y="300" width="600" height="400" fill="#FEF3C7" opacity="0.8"/>
+<rect x="1400" y="250" width="300" height="500" fill="#FFFFFF" opacity="0.4"/>
+<text x="960" y="540" text-anchor="middle" font-family="system-ui, sans-serif" font-size="32" font-weight="600" fill="#92400E">Modern Interior Spaces</text>
+<text x="960" y="600" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" fill="#B45309">Professional Design & Build Services in Kota Kinabalu</text>
+</svg>

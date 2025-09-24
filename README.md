@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Isma Design & Build - Marketing Website
+
+A modern, responsive marketing website for Isma Design & Build, an interior design and renovation company based in Kota Kinabalu, Sabah.
+
+## Features
+
+- **Modern Design**: Clean, professional layout with responsive design
+- **SEO Optimized**: Full SEO optimization with structured data and sitemap
+- **WhatsApp Integration**: Direct WhatsApp contact functionality
+- **Contact Forms**: Advanced form with project type selection and WhatsApp integration
+- **Project Gallery**: Interactive project showcase with modal galleries
+- **Service Pages**: Detailed service descriptions with FAQ sections
+- **Mobile Responsive**: Fully optimized for all device sizes
+
+## Tech Stack
+
+- **Framework**: Next.js 14+ with App Router
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **Type Safety**: TypeScript
+- **Forms**: React Hook Form + Zod validation
+- **Icons**: Lucide React
+- **Animations**: Framer Motion
+- **SEO**: next-sitemap + structured data
+
+## Services Featured
+
+1. Interior Planning, Design & Proposal
+2. Custom-Made Cabinets (Kitchen, Wardrobe, TV Consoles)
+3. Renovation & Contract Work
+4. Full House Design & Build
+5. Special Booth Exhibition
+
+## Pages
+
+- **Home**: Hero, services, projects, testimonials, contact
+- **Services**: Detailed service descriptions with FAQ
+- **Projects**: Portfolio with project galleries
+- **About**: Company story and team information
+- **Contact**: Contact form and business information
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The website is built with modern web standards and includes:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Static generation for optimal performance
+- SEO-friendly URLs and metadata
+- Structured data for search engines
+- Responsive design for all devices
+- WhatsApp integration for immediate contact
+- Form validation and error handling
 
-## Learn More
+## Contact Integration
 
-To learn more about Next.js, take a look at the following resources:
+The website includes multiple ways for customers to get in touch:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Contact forms with WhatsApp integration
+- Direct WhatsApp buttons
+- Phone and email links
+- Service area information for KK and Sabah
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Local SEO
 
-## Deploy on Vercel
+Optimized for local search in:
+- Kota Kinabalu
+- Penampang
+- Putatan
+- Inanam
+- Likas
+- Luyang
+- And surrounding areas in Sabah
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built with ❤️ for Isma Design & Build
