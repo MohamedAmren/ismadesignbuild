@@ -6,6 +6,7 @@ import Footer from "@/components/footer";
 import GlobalCTA from "@/components/global-cta";
 import StructuredData from "@/components/structured-data";
 import FloatingWhatsApp from "@/components/floating-whatsapp";
+import ScrollToTop from "@/components/scroll-to-top";
 import { Toaster } from "@/components/ui/sonner";
 
 const anekTelugu = Anek_Telugu({
@@ -88,6 +89,7 @@ export default function RootLayout({
         <StructuredData />
       </head>
       <body className={`${anekTelugu.className} antialiased`}>
+        <ScrollToTop />
         <Header />
         <main className="min-h-screen">
           {children}

@@ -44,6 +44,9 @@ export default function Footer() {
               {[
                 { name: "Projects", href: "/projects" },
                 { name: "About", href: "/about" },
+                { name: "Offers", href: "/offers" },
+                { name: "Payment Methods", href: "/payment-methods" },
+                { name: "Blogs", href: "/blogs" },
                 { name: "Contact", href: "/contact" },
               ].map((link) => (
                 <Link
@@ -128,8 +131,32 @@ export default function Footer() {
         </div>
 
 
+        {/* Payment Methods */}
+        <div className="mt-12 pt-8 border-t border-gray-800">
+          <div className="text-center mb-8">
+            <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">We Accept</h4>
+            <div className="flex flex-wrap justify-center items-center gap-4">
+              {[
+                { name: "Visa" },
+                { name: "Mastercard" },
+                { name: "Atome" },
+                { name: "Grab" },
+                { name: "Shopee" },
+                { name: "AEON" }
+              ].map((payment, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-800 border border-gray-700 px-3 py-2 rounded text-xs font-medium text-gray-300 hover:bg-gray-700 transition-colors"
+                >
+                  {payment.name}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Copyright */}
-        <div className="mt-12 pt-8 text-center border-t border-gray-800">
+        <div className="mt-8 pt-8 text-center border-t border-gray-800">
           <p className="text-base text-gray-500">
             © {currentYear} Isma Design & Build. All rights reserved.
           </p>

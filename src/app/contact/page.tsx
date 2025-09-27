@@ -107,8 +107,8 @@ export default function ContactPage() {
               >
                 <Card className="border-gray-200 hover:shadow-lg transition-shadow h-full">
                   <CardContent className="p-6 text-center">
-                    <div className="w-12 h-12 bg-yellow-100 flex items-center justify-center mx-auto mb-4">
-                      <info.icon className="h-6 w-6" style={{color: '#003153'}} />
+                    <div className="w-12 h-12 border-2 border-gray-300 flex items-center justify-center mx-auto mb-4 rounded-full">
+                      <info.icon className="h-6 w-6" style={{color: '#003153'}} strokeWidth={1.5} />
                     </div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">{info.title}</h3>
                     <div className="space-y-1">

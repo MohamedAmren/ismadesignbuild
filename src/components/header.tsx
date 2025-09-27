@@ -5,12 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
+import { Menu, X, ArrowRight, Phone } from "lucide-react";
 
 const navigation = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
   { name: "Services", href: "/services" },
+  { name: "Offers", href: "/offers" },
   { name: "Projects", href: "/projects" },
   { name: "Contact", href: "/contact" },
 ];
@@ -62,35 +63,78 @@ export default function Header() {
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <div className="flex flex-col space-y-6 pt-6">
-                <div className="text-2xl font-bold text-gray-900">
-                  Isma Design & Build
+            <SheetContent side="right" className="w-full sm:w-[400px] p-0">
+              <div className="flex flex-col h-full bg-white">
+                {/* Header with close button */}
+                <div className="flex items-center justify-between p-6 border-b border-gray-100">
+                  <div className="text-xl font-bold text-gray-900">
+                    Isma Design & Build
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsOpen(false)}
+                    className="h-8 w-8 p-0"
+                  >
+                    <X className="h-5 w-5" />
+                  </Button>
                 </div>
-                <div className="flex flex-col space-y-4">
-                  {navigation.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className={`text-lg font-medium transition-colors hover:opacity-80 ${
-                        pathname === item.href
-                          ? "text-gray-900"
-                          : "text-gray-600"
-                      }`}
-                      style={pathname === item.href ? {color: '#003153'} : {}}
+
+                {/* Navigation Links */}
+                <div className="flex-1 px-6 py-8">
+                  <nav className="flex flex-col space-y-2">
+                    {navigation.map((item, index) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className={`group flex items-center justify-between p-4 rounded-lg transition-all duration-200 hover:bg-gray-50 ${
+                          pathname === item.href
+                            ? "bg-blue-50 text-blue-900 border-l-4 border-blue-600"
+                            : "text-gray-700 hover:text-gray-900"
+                        }`}
+                        style={pathname === item.href ? {borderLeftColor: '#003153', backgroundColor: '#f0f9ff'} : {}}
+                        onClick={() => setIsOpen(false)}
+                      >
+                        <span className="text-lg font-medium">{item.name}</span>
+                        <ArrowRight className={`h-5 w-5 transition-transform ${
+                          pathname === item.href ? 'text-blue-600' : 'text-gray-400 group-hover:translate-x-1'
+                        }`}
+                        style={pathname === item.href ? {color: '#003153'} : {}}
+                        />
+                      </Link>
+                    ))}
+                  </nav>
+                </div>
+
+                {/* Footer with CTA and Contact */}
+                <div className="p-6 border-t border-gray-100 bg-gray-50">
+                  <div className="space-y-4">
+                    <Button
+                      asChild
+                      className="w-full text-white hover:bg-blue-800 h-12 text-lg font-semibold"
+                      style={{backgroundColor: '#003153'}}
                       onClick={() => setIsOpen(false)}
                     >
-                      {item.name}
-                    </Link>
-                  ))}
-                  <Button
-                    asChild
-                    className="mt-4 text-white hover:bg-blue-800 w-fit"
-                    style={{backgroundColor: '#003153'}}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <Link href="/contact">Get Quote</Link>
-                  </Button>
+                      <Link href="/contact" className="flex items-center justify-center space-x-2">
+                        <span>Get Quote</span>
+                        <ArrowRight className="h-5 w-5" />
+                      </Link>
+                    </Button>
+
+                    <a
+                      href="tel:+60189023676"
+                      className="flex items-center justify-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+                    >
+                      <Phone className="h-4 w-4" />
+                      <span className="text-sm font-medium">+60 18-902 3676</span>
+                    </a>
+
+                    <div className="text-center">
+                      <p className="text-xs text-gray-500">
+                        Kota Kinabalu, Sabah, Malaysia
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </SheetContent>

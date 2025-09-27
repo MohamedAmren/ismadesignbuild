@@ -27,39 +27,48 @@ import {
   Hammer,
   Building,
   Store,
-  ChevronDown
+  ChevronDown,
+  Settings,
+  MessageCircle,
+  Package
 } from "lucide-react";
 
 const services = [
   {
-    icon: Palette,
-    title: "Interior Design + Feng Shui (风水)",
-    description: "Design consultancy for residential, commercial, and office spaces with optional Feng Shui consultancy."
+    icon: HomeIcon,
+    title: "Residential Design & Renovation",
+    description: "From apartments to landed homes, including kitchens, wardrobes, and living spaces.",
+    image: "Construction & Renovation"
   },
   {
     icon: Building,
-    title: "Design & Build",
-    description: "A one-stop solution from concept to completion with in-house architectural design and construction."
-  },
-  {
-    icon: HomeIcon,
-    title: "Construction & Renovation",
-    description: "Quality construction and renovation for homes, offices, and commercial properties."
+    title: "Commercial & Office Fit-Out",
+    description: "Retail shops, cafés, restaurants, and corporate offices with branding-focused design.",
+    image: "Design & Build"
   },
   {
     icon: Wrench,
-    title: "Custom Built-in Furniture",
-    description: "Tailored, high-quality carpentry solutions including wardrobes, kitchen cabinets, and TV consoles."
+    title: "Custom Carpentry & Furniture",
+    description: "Wardrobes, kitchen cabinets, TV consoles, partitions, and decorative backdrops.",
+    image: "Custom Built-in Furniture"
   },
   {
-    icon: Ruler,
-    title: "Flooring & Curtains",
-    description: "Complete your interior with a wide selection of flooring materials and window treatments."
+    icon: Palette,
+    title: "Styling & Décor",
+    description: "Soft furnishings, lighting, and final touches to complete the space.",
+    image: "Flooring & Curtains"
   },
   {
     icon: PenTool,
-    title: "Local Authority Submission & Approval",
-    description: "We handle permit submissions and approvals to ensure your project complies with regulations."
+    title: "2D & 3D Design Visualization",
+    description: "Space planning, detailed layouts, and realistic renderings for a clear preview before build.",
+    image: "Interior Design + Feng Shui (风水)"
+  },
+  {
+    icon: Settings,
+    title: "Project Management & Renovation Works",
+    description: "Full on-site execution, scheduling, quality control, and coordination with contractors.",
+    image: "Local Authority Submission & Approval"
   }
 ];
 
@@ -204,6 +213,67 @@ const worksData = [
   { id: 10, title: "Outdoor Patio", location: "Kota Kinabalu, Sabah", image: "/images/hero 5.jpg" }
 ];
 
+// Featured packages for home page - 3 best packages
+const featuredPackages = [
+  {
+    id: "premium-design",
+    name: "Premium Design Package",
+    price: "RM 35,000",
+    originalPrice: "RM 42,000",
+    category: "Interior Design",
+    featured: true,
+    rating: 4.9,
+    reviews: 18,
+    image: "/images/Design & Build.jpg",
+    description: "Complete interior design solution with custom elements and premium finishes.",
+    highlights: [
+      "3D visualization and walkthroughs",
+      "Custom furniture design",
+      "Premium material selection",
+      "6 months workmanship warranty"
+    ],
+    duration: "8-12 weeks"
+  },
+  {
+    id: "smart-home",
+    name: "Smart Home Integration Package",
+    price: "RM 35,000",
+    originalPrice: "RM 42,000",
+    category: "Technology",
+    featured: true,
+    rating: 4.8,
+    reviews: 26,
+    image: "/images/Design & Build.jpg",
+    description: "Complete smart home automation system with modern technology integration.",
+    highlights: [
+      "Automated lighting control system",
+      "Smart thermostat and climate control",
+      "Security system integration",
+      "12 months technical warranty"
+    ],
+    duration: "4-6 weeks"
+  },
+  {
+    id: "luxury-suite",
+    name: "Luxury Suite Package",
+    price: "RM 85,000",
+    originalPrice: "RM 100,000",
+    category: "Luxury",
+    featured: true,
+    rating: 5.0,
+    reviews: 8,
+    image: "/images/Interior Design + Feng Shui (风水).jpg",
+    description: "Ultimate luxury package with premium materials and bespoke design elements.",
+    highlights: [
+      "Feng Shui consultation",
+      "Premium 3D visualization and VR walkthrough",
+      "Smart home integration",
+      "12 months comprehensive warranty"
+    ],
+    duration: "16-24 weeks"
+  }
+];
+
 export default function Home() {
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
   const [animatedStats, setAnimatedStats] = useState<number[]>([0, 0, 0, 0]);
@@ -220,6 +290,14 @@ export default function Home() {
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const whatsappMessage = (packageName: string, price: string) => {
+    return `Hi Isma Design & Build! I'm interested in the ${packageName} (${price}). Can you provide more details?`;
+  };
+
+  const whatsappLink = (message: string) => {
+    return `https://wa.me/60189023676?text=${encodeURIComponent(message)}`;
   };
 
   const toggleFaq = (index: number) => {
@@ -486,7 +564,7 @@ Our team specializes in transforming visions into reality through innovative arc
                     {/* Service Image */}
                     <div className={`relative ${imageSizes[index]} mb-6 overflow-hidden `}>
                       <Image
-                        src={`/images/${service.title}.jpg`}
+                        src={`/images/${service.image}.jpg`}
                         alt={service.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -610,6 +688,7 @@ Our team specializes in transforming visions into reality through innovative arc
           </div>
         </div>
       </section>
+
 
       {/* Why Choose Us */}
       <section className="py-16 md:py-20 bg-white">
@@ -823,7 +902,137 @@ Our team specializes in transforming visions into reality through innovative arc
         </div>
       </section>
 
+      {/* Our Best Packages */}
+      <section className="py-16 md:py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <ScrollAnimated animationType="fade-in" threshold={0.1}>
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-4">Our Best Packages</h2>
+              <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto">
+                Discover our most popular design and build packages, carefully crafted to meet different needs and budgets.
+              </p>
+            </div>
+          </ScrollAnimated>
 
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-7xl mx-auto">
+            {featuredPackages.map((pkg, index) => (
+              <ScrollAnimated
+                key={pkg.id}
+                animationType="slide-up"
+                delay={index * 200}
+                threshold={0.1}
+              >
+                <div className="group relative bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden h-full flex flex-col">
+                  {pkg.featured && (
+                    <div className="absolute top-4 left-4 bg-blue-500 text-white px-3 py-1 text-xs font-semibold rounded z-10">
+                      Most Popular
+                    </div>
+                  )}
+
+                  {/* Package Image */}
+                  <div className="relative h-48 bg-gray-100">
+                    <Image
+                      src={pkg.image}
+                      alt={pkg.name}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    {pkg.originalPrice && (
+                      <div className="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 text-xs font-semibold rounded">
+                        Save {Math.round(((parseFloat(pkg.originalPrice.replace(/[^0-9]/g, '')) - parseFloat(pkg.price.replace(/[^0-9]/g, ''))) / parseFloat(pkg.originalPrice.replace(/[^0-9]/g, ''))) * 100)}%
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Package Content */}
+                  <div className="p-6 flex-1 flex flex-col">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                        {pkg.category}
+                      </span>
+                      <div className="flex items-center space-x-1">
+                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                        <span className="text-sm font-medium">{pkg.rating}</span>
+                        <span className="text-xs text-gray-500">({pkg.reviews})</span>
+                      </div>
+                    </div>
+
+                    <h3 className="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
+                      {pkg.name}
+                    </h3>
+
+                    <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-2">
+                      {pkg.description}
+                    </p>
+
+                    {/* Key Highlights */}
+                    <div className="mb-4">
+                      <ul className="space-y-1">
+                        {pkg.highlights.slice(0, 3).map((highlight, idx) => (
+                          <li key={idx} className="flex items-start text-xs text-gray-600">
+                            <CheckCircle className="w-3 h-3 text-green-500 mr-2 flex-shrink-0 mt-0.5" />
+                            <span>{highlight}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="mb-4">
+                      <div className="flex items-baseline space-x-2">
+                        <span className="text-xl font-bold text-gray-900">{pkg.price}</span>
+                        {pkg.originalPrice && (
+                          <span className="text-sm text-gray-500 line-through">{pkg.originalPrice}</span>
+                        )}
+                      </div>
+                      <div className="flex items-center space-x-1 mt-1">
+                        <Clock className="w-3 h-3 text-gray-400" />
+                        <span className="text-xs text-gray-500">{pkg.duration}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col space-y-2 mt-auto">
+                      <Link
+                        href="/offers"
+                        className="w-full text-white hover:bg-blue-800 transition-colors py-2 px-4 text-sm font-medium text-center rounded"
+                        style={{backgroundColor: '#003153'}}
+                      >
+                        View Details
+                      </Link>
+                      <a
+                        href={whatsappLink(whatsappMessage(pkg.name, pkg.price))}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full border border-gray-300 text-gray-700 text-center py-2 px-4 text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2 rounded"
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        <span>Get Quote</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </ScrollAnimated>
+            ))}
+          </div>
+
+          {/* Call to Action */}
+          <ScrollAnimated animationType="fade-in" threshold={0.1} delay={600}>
+            <div className="text-center mt-12">
+              <p className="text-gray-600 mb-6">
+                Looking for more options? Explore our complete range of packages.
+              </p>
+              <Link
+                href="/offers"
+                className="inline-flex items-center space-x-2 text-white hover:bg-blue-800 transition-colors py-3 px-6 font-medium rounded"
+                style={{backgroundColor: '#003153'}}
+              >
+                <Package className="w-5 h-5" />
+                <span>View All Packages</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </ScrollAnimated>
+        </div>
+      </section>
 
     </div>
   );

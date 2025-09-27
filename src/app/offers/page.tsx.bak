@@ -1,0 +1,1083 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { ScrollAnimated } from "@/hooks/useScrollAnimation";
+import HeroBackgroundSlider from "@/components/hero-background-slider";
+import {
+  CheckCircle,
+  Star,
+  ShoppingCart,
+  MessageCircle,
+  Filter,
+  Search,
+  Grid,
+  List,
+  X,
+  Clock,
+  Users,
+  Package,
+  Award
+} from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+
+const packages = [
+  // Residential Packages
+  {
+    id: "compact-living",
+    name: "Compact Living (Studio / 1-Bedroom Condo)",
+    price: "RM 35,000",
+    originalPrice: "RM 50,000",
+    category: "Residential",
+    featured: false,
+    rating: 4.7,
+    reviews: 28,
+    image: "/images/Design & Build.jpg",
+    description: "Perfect solution for studio apartments and 1-bedroom condos with optimized space planning.",
+    includes: [
+      "Living room TV feature wall (laminate finish, wiring concealment)",
+      "Basic plaster ceiling with LED downlights",
+      "Wall painting (1 colour, Nippon Matex / Jotun equivalent)",
+      "Sliding wardrobe (5ft, laminate finish)",
+      "Vinyl SPC flooring 4mm with skirting",
+      "8ft base + wall cabinet (laminate finish, ABS edging)",
+      "Quartz stone tabletop (basic series)",
+      "Sink + basic mixer included",
+      "Soft-close hinges & drawers"
+    ],
+    materials: [
+      "Nippon Matex / Jotun paint",
+      "Vinyl SPC flooring 4mm",
+      "Laminate finish cabinets",
+      "Quartz stone basic series",
+      "LED downlights",
+      "Soft-close hardware"
+    ],
+    coverage: "Living (up to 200 sqft) + Bedroom (up to 120 sqft) + Kitchen (8ft cabinet)",
+    duration: "4-6 weeks",
+    suitableFor: "Studio, 1-Bedroom Condo"
+  },
+  {
+    id: "premium-design",
+    name: "Premium Design Package",
+    price: "RM 35,000",
+    originalPrice: "RM 42,000",
+    category: "Interior Design",
+    featured: true,
+    rating: 4.9,
+    reviews: 18,
+    image: "/images/Design & Build.jpg",
+    description: "Complete interior design solution with custom elements and premium finishes.",
+    includes: [
+      "Comprehensive design consultation",
+      "3D visualization and walkthroughs",
+      "Custom furniture design",
+      "Premium material selection",
+      "Full room makeover (living, dining, kitchen)",
+      "Custom built-in storage solutions",
+      "Premium lighting design",
+      "Soft furnishing coordination",
+      "Project management and coordination",
+      "6 months workmanship warranty",
+      "Post-completion styling session"
+    ],
+    materials: [
+      "Premium imported tiles and natural stone",
+      "Solid wood or high-grade engineered flooring",
+      "Designer lighting fixtures (Philips Hue, OSRAM)",
+      "Premium fabric and leather upholstery",
+      "Quartz or marble countertops",
+      "European hardware and fittings",
+      "Smart home integration components",
+      "Custom millwork in premium wood species"
+    ],
+    duration: "8-12 weeks",
+    suitableFor: "Landed Houses, Large Apartments"
+  },
+  {
+    id: "kitchen-makeover",
+    name: "Kitchen Makeover Package",
+    price: "RM 18,000",
+    originalPrice: "RM 22,000",
+    category: "Kitchen",
+    featured: false,
+    rating: 4.7,
+    reviews: 31,
+    image: "/images/Custom Built-in Furniture.jpg",
+    description: "Transform your kitchen with modern design and functional storage solutions.",
+    includes: [
+      "Kitchen design consultation",
+      "Custom kitchen cabinet system",
+      "Quartz countertop installation",
+      "Backsplash tiling",
+      "Kitchen island (if space permits)",
+      "Electrical and plumbing works",
+      "Appliance installation guidance",
+      "Kitchen lighting upgrade",
+      "Project coordination",
+      "4 months workmanship warranty"
+    ],
+    duration: "5-7 weeks",
+    suitableFor: "All Kitchen Types"
+  },
+  {
+    id: "commercial-fitout",
+    name: "Commercial Fit-Out Package",
+    price: "RM 45,000",
+    originalPrice: "RM 55,000",
+    category: "Commercial",
+    featured: false,
+    rating: 4.8,
+    reviews: 12,
+    image: "/images/Flooring & Curtains.jpg",
+    description: "Professional commercial space design for offices, retail, and F&B establishments.",
+    includes: [
+      "Brand-focused design concept",
+      "Space planning and layout design",
+      "Commercial-grade materials",
+      "Custom reception/counter design",
+      "Office furniture and fixtures",
+      "Commercial lighting system",
+      "Signage and branding elements",
+      "Electrical and data cabling",
+      "HVAC coordination",
+      "Authority submission assistance",
+      "12 months workmanship warranty"
+    ],
+    duration: "10-16 weeks",
+    suitableFor: "Offices, Retail, Restaurants"
+  },
+  {
+    id: "luxury-suite",
+    name: "Luxury Suite Package",
+    price: "RM 85,000",
+    originalPrice: "RM 100,000",
+    category: "Luxury",
+    featured: true,
+    rating: 5.0,
+    reviews: 8,
+    image: "/images/Interior Design + Feng Shui (风水).jpg",
+    description: "Ultimate luxury package with premium materials and bespoke design elements.",
+    includes: [
+      "Luxury design consultation with senior designer",
+      "Feng Shui consultation",
+      "Premium 3D visualization and VR walkthrough",
+      "Imported premium materials",
+      "Custom luxury furniture and fixtures",
+      "Smart home integration",
+      "Premium appliances coordination",
+      "Luxury bathroom with premium fittings",
+      "Walk-in wardrobe design",
+      "Premium lighting and automation",
+      "Landscape design (if applicable)",
+      "White-glove project management",
+      "12 months comprehensive warranty",
+      "Quarterly maintenance check-ups (1 year)"
+    ],
+    duration: "16-24 weeks",
+    suitableFor: "Luxury Homes, Penthouses"
+  },
+  {
+    id: "home-styling",
+    name: "Home Styling Package",
+    price: "RM 8,500",
+    originalPrice: "RM 12,000",
+    category: "Styling",
+    featured: false,
+    rating: 4.6,
+    reviews: 42,
+    image: "/images/Local Authority Submission & Approval.jpg",
+    description: "Complete home styling with furniture, décor, and finishing touches.",
+    includes: [
+      "Style consultation and mood boarding",
+      "Furniture selection and procurement",
+      "Soft furnishing coordination",
+      "Art and décor selection",
+      "Window treatment design",
+      "Lighting accessories",
+      "Plant and greenery selection",
+      "Color scheme coordination",
+      "Styling and arrangement service",
+      "2 months styling warranty"
+    ],
+    duration: "3-4 weeks",
+    suitableFor: "Furnished Homes, Staging"
+  },
+  {
+    id: "bathroom-renovation",
+    name: "Bathroom Renovation Package",
+    price: "RM 25,000",
+    originalPrice: "RM 30,000",
+    category: "Renovation",
+    featured: false,
+    rating: 4.7,
+    reviews: 28,
+    image: "/images/Flooring & Curtains.jpg",
+    description: "Complete bathroom transformation with modern fixtures and premium finishes.",
+    includes: [
+      "Bathroom design consultation",
+      "Waterproofing and tiling",
+      "Premium sanitary fittings",
+      "Custom vanity installation",
+      "Shower system upgrade",
+      "Electrical and plumbing works",
+      "Ventilation system",
+      "Mirror and lighting installation",
+      "Project coordination",
+      "6 months workmanship warranty"
+    ],
+    duration: "6-8 weeks",
+    suitableFor: "All Bathroom Types"
+  },
+  {
+    id: "wardrobe-system",
+    name: "Custom Wardrobe System",
+    price: "RM 15,000",
+    originalPrice: "RM 18,000",
+    category: "Storage",
+    featured: false,
+    rating: 4.8,
+    reviews: 35,
+    image: "/images/Custom Built-in Furniture.jpg",
+    description: "Bespoke wardrobe solutions with smart storage and elegant design.",
+    includes: [
+      "Walk-in or built-in wardrobe design",
+      "Custom compartment planning",
+      "Premium melamine or solid wood",
+      "Soft-close hinges and drawers",
+      "LED lighting system",
+      "Mirror integration",
+      "Shoe rack and accessories storage",
+      "Installation and finishing",
+      "3 months warranty"
+    ],
+    duration: "4-5 weeks",
+    suitableFor: "Bedrooms, Dressing Rooms"
+  },
+  {
+    id: "office-renovation",
+    name: "Office Renovation Package",
+    price: "RM 38,000",
+    originalPrice: "RM 45,000",
+    category: "Commercial",
+    featured: false,
+    rating: 4.9,
+    reviews: 16,
+    image: "/images/Design & Build.jpg",
+    description: "Professional office space renovation with modern design and functionality.",
+    includes: [
+      "Office space planning",
+      "Meeting room and workstation design",
+      "Commercial flooring installation",
+      "Partition and glass wall systems",
+      "Electrical and network cabling",
+      "Air conditioning coordination",
+      "Commercial lighting design",
+      "Reception area design",
+      "Storage solutions",
+      "12 months comprehensive warranty"
+    ],
+    duration: "8-12 weeks",
+    suitableFor: "Corporate Offices, Coworking Spaces"
+  },
+  {
+    id: "garden-landscape",
+    name: "Garden & Landscape Package",
+    price: "RM 22,000",
+    originalPrice: "RM 28,000",
+    category: "Landscape",
+    featured: false,
+    rating: 4.5,
+    reviews: 19,
+    image: "/images/Interior Design + Feng Shui (风水).jpg",
+    description: "Transform outdoor spaces with beautiful landscaping and garden design.",
+    includes: [
+      "Landscape design consultation",
+      "Garden planning and layout",
+      "Plant selection and installation",
+      "Irrigation system setup",
+      "Pathway and deck construction",
+      "Outdoor lighting installation",
+      "Water feature design",
+      "Gazebo or pergola construction",
+      "Maintenance guidance",
+      "6 months plant warranty"
+    ],
+    duration: "6-10 weeks",
+    suitableFor: "Residential Gardens, Outdoor Spaces"
+  },
+  {
+    id: "retail-fitout",
+    name: "Retail Fit-Out Package",
+    price: "RM 55,000",
+    originalPrice: "RM 65,000",
+    category: "Commercial",
+    featured: true,
+    rating: 4.8,
+    reviews: 11,
+    image: "/images/Construction & Renovation.jpg",
+    description: "Complete retail space transformation to attract customers and boost sales.",
+    includes: [
+      "Retail space design and branding",
+      "Customer flow optimization",
+      "Display and shelving systems",
+      "POS counter design",
+      "Commercial-grade finishes",
+      "Storefront design",
+      "Security system integration",
+      "Commercial lighting design",
+      "HVAC coordination",
+      "Authority approvals assistance",
+      "12 months workmanship warranty"
+    ],
+    duration: "10-14 weeks",
+    suitableFor: "Retail Stores, Boutiques"
+  },
+  {
+    id: "studio-apartment",
+    name: "Studio Apartment Package",
+    price: "RM 28,000",
+    originalPrice: "RM 35,000",
+    category: "Interior Design",
+    featured: false,
+    rating: 4.6,
+    reviews: 24,
+    image: "/images/Flooring & Curtains.jpg",
+    description: "Smart design solutions for compact studio living with maximum functionality.",
+    includes: [
+      "Space optimization consultation",
+      "Multi-functional furniture design",
+      "Built-in storage solutions",
+      "Murphy bed or sofa bed",
+      "Compact kitchen design",
+      "Bathroom renovation",
+      "Smart storage systems",
+      "Lighting design",
+      "Color coordination",
+      "4 months warranty"
+    ],
+    duration: "6-8 weeks",
+    suitableFor: "Studio Apartments, Small Spaces"
+  },
+  {
+    id: "restaurant-design",
+    name: "Restaurant Design Package",
+    price: "RM 75,000",
+    originalPrice: "RM 90,000",
+    category: "Commercial",
+    featured: true,
+    rating: 4.9,
+    reviews: 8,
+    image: "/images/Design & Build.jpg",
+    description: "Complete restaurant design creating the perfect dining atmosphere.",
+    includes: [
+      "Restaurant concept development",
+      "Kitchen and dining area design",
+      "Commercial kitchen equipment layout",
+      "Bar and counter design",
+      "Seating and furniture selection",
+      "Acoustic treatment",
+      "Commercial lighting design",
+      "Ventilation and exhaust systems",
+      "Authority submission assistance",
+      "Fire safety compliance",
+      "12 months comprehensive warranty"
+    ],
+    duration: "12-16 weeks",
+    suitableFor: "Restaurants, Cafes, F&B Outlets"
+  },
+  {
+    id: "condominium-package",
+    name: "Condominium Renovation Package",
+    price: "RM 42,000",
+    originalPrice: "RM 50,000",
+    category: "Renovation",
+    featured: false,
+    rating: 4.7,
+    reviews: 22,
+    image: "/images/Interior Design + Feng Shui (风水).jpg",
+    description: "Complete condominium renovation with modern design and space optimization.",
+    includes: [
+      "Full unit renovation planning",
+      "Living and dining area design",
+      "Bedroom and bathroom renovation",
+      "Kitchen cabinet and island",
+      "Built-in storage throughout",
+      "Flooring and wall finishes",
+      "Electrical rewiring",
+      "Plumbing upgrades",
+      "Lighting installation",
+      "6 months comprehensive warranty"
+    ],
+    duration: "10-14 weeks",
+    suitableFor: "Condominiums, Apartments"
+  },
+  {
+    id: "kids-room",
+    name: "Kids Room Design Package",
+    price: "RM 12,000",
+    originalPrice: "RM 15,000",
+    category: "Interior Design",
+    featured: false,
+    rating: 4.8,
+    reviews: 31,
+    image: "/images/Custom Built-in Furniture.jpg",
+    description: "Fun and functional kids room design with safety and creativity in mind.",
+    includes: [
+      "Age-appropriate design consultation",
+      "Custom bed and study desk",
+      "Toy and book storage solutions",
+      "Safety features and child-proofing",
+      "Themed wall treatments",
+      "Educational wall graphics",
+      "Proper lighting for study and play",
+      "Durable and washable materials",
+      "Growth-adaptable furniture",
+      "3 months warranty"
+    ],
+    duration: "4-6 weeks",
+    suitableFor: "Children's Bedrooms, Play Areas"
+  },
+  {
+    id: "balcony-terrace",
+    name: "Balcony & Terrace Design Package",
+    price: "RM 18,000",
+    originalPrice: "RM 22,000",
+    category: "Outdoor",
+    featured: false,
+    rating: 4.6,
+    reviews: 14,
+    image: "/images/Interior Design + Feng Shui (风水).jpg",
+    description: "Transform your balcony or terrace into a beautiful outdoor living space.",
+    includes: [
+      "Outdoor space design consultation",
+      "Weather-resistant furniture selection",
+      "Outdoor flooring installation",
+      "Shade and privacy solutions",
+      "Outdoor lighting system",
+      "Plant and greenery arrangement",
+      "Water feature integration",
+      "Outdoor storage solutions",
+      "Maintenance guidance",
+      "4 months warranty"
+    ],
+    duration: "3-5 weeks",
+    suitableFor: "Balconies, Terraces, Patios"
+  },
+  {
+    id: "elderly-friendly",
+    name: "Elderly-Friendly Home Package",
+    price: "RM 32,000",
+    originalPrice: "RM 38,000",
+    category: "Accessibility",
+    featured: false,
+    rating: 4.9,
+    reviews: 17,
+    image: "/images/Construction & Renovation.jpg",
+    description: "Senior-friendly home modifications for safety, comfort, and accessibility.",
+    includes: [
+      "Accessibility assessment and consultation",
+      "Bathroom safety modifications",
+      "Grab bars and handrails installation",
+      "Non-slip flooring solutions",
+      "Improved lighting throughout",
+      "Kitchen accessibility upgrades",
+      "Bedroom safety enhancements",
+      "Easy-access storage solutions",
+      "Emergency response systems",
+      "6 months comprehensive warranty"
+    ],
+    duration: "6-8 weeks",
+    suitableFor: "Senior Living, Accessible Homes"
+  },
+  {
+    id: "smart-home",
+    name: "Smart Home Integration Package",
+    price: "RM 35,000",
+    originalPrice: "RM 42,000",
+    category: "Technology",
+    featured: true,
+    rating: 4.8,
+    reviews: 26,
+    image: "/images/Design & Build.jpg",
+    description: "Complete smart home automation system with modern technology integration.",
+    includes: [
+      "Smart home consultation and planning",
+      "Automated lighting control system",
+      "Smart thermostat and climate control",
+      "Security system integration",
+      "Smart door locks and access control",
+      "Home entertainment system setup",
+      "Voice assistant integration",
+      "Mobile app configuration",
+      "User training and support",
+      "12 months technical warranty"
+    ],
+    materials: [
+      "Smart switches and dimmers (Lutron, Legrand)",
+      "Smart thermostats (Nest, Ecobee)",
+      "Security cameras and sensors (Ring, Arlo)",
+      "Smart door locks (August, Yale)",
+      "Voice assistants (Amazon Echo, Google Nest)",
+      "Smart lighting systems (Philips Hue, LIFX)",
+      "Home automation hub (SmartThings, Hubitat)",
+      "Professional grade networking equipment"
+    ],
+    duration: "4-6 weeks",
+    suitableFor: "Modern Homes, Tech Enthusiasts"
+  },
+  {
+    id: "laundry-room",
+    name: "Laundry Room Organization Package",
+    price: "RM 9,500",
+    originalPrice: "RM 12,500",
+    category: "Storage",
+    featured: false,
+    rating: 4.7,
+    reviews: 33,
+    image: "/images/Custom Built-in Furniture.jpg",
+    description: "Efficient laundry room design with smart storage and functional layout.",
+    includes: [
+      "Laundry room layout consultation",
+      "Custom cabinets and shelving",
+      "Washer and dryer platform",
+      "Hanging and folding stations",
+      "Utility sink installation",
+      "Ventilation improvements",
+      "Lighting upgrades",
+      "Storage basket systems",
+      "Water-resistant finishes",
+      "3 months warranty"
+    ],
+    duration: "3-4 weeks",
+    suitableFor: "Laundry Rooms, Utility Areas"
+  },
+  {
+    id: "cafe-bistro",
+    name: "Cafe & Bistro Design Package",
+    price: "RM 48,000",
+    originalPrice: "RM 58,000",
+    category: "Commercial",
+    featured: false,
+    rating: 4.8,
+    reviews: 12,
+    image: "/images/Flooring & Curtains.jpg",
+    description: "Cozy cafe and bistro design creating the perfect ambiance for customers.",
+    includes: [
+      "Cafe concept and theme development",
+      "Seating area design and layout",
+      "Counter and service area design",
+      "Menu display solutions",
+      "Ambient lighting design",
+      "Sound system integration",
+      "Barista station optimization",
+      "Customer comfort features",
+      "Branding and signage coordination",
+      "Authority compliance assistance",
+      "10 months workmanship warranty"
+    ],
+    duration: "8-12 weeks",
+    suitableFor: "Cafes, Bistros, Coffee Shops"
+  }
+];
+
+const categories = ["All", "Renovation", "Interior Design", "Kitchen", "Commercial", "Luxury", "Styling", "Storage", "Landscape", "Outdoor", "Accessibility", "Technology"];
+
+export default function OffersPage() {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedPackage, setSelectedPackage] = useState<typeof packages[0] | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const packagesPerPage = 16;
+
+  const filteredPackages = packages.filter(pkg => {
+    const matchesCategory = selectedCategory === "All" || pkg.category === selectedCategory;
+    const matchesSearch = pkg.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         pkg.description.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  const totalPages = Math.ceil(filteredPackages.length / packagesPerPage);
+  const startIndex = (currentPage - 1) * packagesPerPage;
+  const paginatedPackages = filteredPackages.slice(startIndex, startIndex + packagesPerPage);
+
+  // Reset to page 1 when filters change
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (term: string) => {
+    setSearchTerm(term);
+    setCurrentPage(1);
+  };
+
+  const openModal = (pkg: typeof packages[0]) => {
+    setSelectedPackage(pkg);
+    setIsModalOpen(true);
+  };
+
+  const whatsappMessage = (packageName: string, price: string) => {
+    return `Hi Isma Design & Build! I'm interested in the ${packageName} (${price}). Can you provide more details?`;
+  };
+
+  const whatsappLink = (message: string) => {
+    return `https://wa.me/60189023676?text=${encodeURIComponent(message)}`;
+  };
+
+
+  return (
+    <div className="min-h-screen bg-white">
+      <section className="relative h-[70vh] flex items-center justify-center bg-gray-900 text-gray-900 overflow-hidden">
+        <HeroBackgroundSlider />
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <div className="max-w-7xl mx-auto flex justify-center items-center">
+            <div>
+              <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-bold leading-tight text-white drop-shadow-lg md:whitespace-nowrap">
+                Our Offers
+              </h1>
+              <p className="text-lg md:text-xl text-white/90 mt-6 max-w-2xl mx-auto">
+                Choose from our carefully crafted packages designed to meet every budget and requirement
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <ScrollAnimated animationType="fade-in" threshold={0.1}>
+            <div className="text-center mb-12">
+              <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-4">
+                Design & Build Packages
+              </h2>
+              <p className="text-sm md:text-base text-gray-600 max-w-2xl mx-auto">
+                Professional packages tailored to your needs and budget. All packages include consultation, project management, and warranty.
+              </p>
+            </div>
+          </ScrollAnimated>
+
+          {/* Online Store Layout */}
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Left Sidebar - Filters */}
+            <div className="lg:w-80 flex-shrink-0">
+              <div className="bg-gray-50 p-4 lg:p-6 rounded-lg lg:sticky lg:top-20">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4 lg:mb-6 flex items-center">
+                  <Filter className="w-5 h-5 mr-2" />
+                  Filters
+                </h3>
+
+                {/* Search */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <input
+                      type="text"
+                      placeholder="Search packages..."
+                      value={searchTerm}
+                      onChange={(e) => handleSearchChange(e.target.value)}
+                      className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:border-gray-400 focus:outline-none text-sm"
+                    />
+                  </div>
+                </div>
+
+                {/* Category Filter */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-3">Category</label>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-2">
+                    {categories.map((category) => (
+                      <button
+                        key={category}
+                        onClick={() => handleCategoryChange(category)}
+                        className={`w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                          selectedCategory === category
+                            ? 'bg-gray-900 text-white'
+                            : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                        }`}
+                      >
+                        {category}
+                        {selectedCategory === category && filteredPackages.length > 0 && (
+                          <span className="float-right bg-white/20 px-2 py-0.5 rounded text-xs">
+                            {filteredPackages.length}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Price Range */}
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-3">Price Range</label>
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <div>Budget: RM 8,000 - RM 20,000</div>
+                    <div>Premium: RM 20,000 - RM 50,000</div>
+                    <div>Luxury: RM 50,000+</div>
+                  </div>
+                </div>
+
+                {/* Results Count */}
+                <div className="text-sm text-gray-500 border-t border-gray-200 pt-4">
+                  Showing {filteredPackages.length} of {packages.length} packages
+                </div>
+              </div>
+            </div>
+
+            {/* Right Content - Products */}
+            <div className="flex-1">
+              {/* Toolbar */}
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200">
+                <div className="text-sm text-gray-600">
+                  Showing {startIndex + 1}-{Math.min(startIndex + packagesPerPage, filteredPackages.length)} of {filteredPackages.length} packages
+                </div>
+                <div className="flex items-center space-x-4">
+                  <span className="text-sm text-gray-600">View:</span>
+                  <div className="flex items-center space-x-1 bg-gray-100 p-1 rounded">
+                    <button
+                      onClick={() => setViewMode('grid')}
+                      className={`p-2 rounded transition-colors ${
+                        viewMode === 'grid' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'
+                      }`}
+                    >
+                      <Grid className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => setViewMode('list')}
+                      className={`p-2 rounded transition-colors ${
+                        viewMode === 'list' ? 'bg-white shadow-sm' : 'hover:bg-gray-200'
+                      }`}
+                    >
+                      <List className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Packages Grid/List */}
+              <div className={`${
+                viewMode === 'grid'
+                  ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6'
+                  : 'space-y-6'
+              }`}>
+                {paginatedPackages.map((pkg, index) => (
+                  <ScrollAnimated
+                    key={pkg.id}
+                    animationType={viewMode === 'grid' ? 'slide-up' : 'fade-in'}
+                    delay={index * 100}
+                    threshold={0.1}
+                  >
+                    <div className={`group relative bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-all duration-300 hover:shadow-lg overflow-hidden ${
+                      viewMode === 'list' ? 'flex' : 'flex flex-col h-full'
+                    } ${pkg.featured ? 'ring-2 ring-blue-500 ring-opacity-50' : ''}`}>
+                      {pkg.featured && (
+                        <div className="absolute top-4 left-4 bg-blue-500 text-white px-3 py-1 text-xs font-semibold rounded z-10">
+                          Most Popular
+                        </div>
+                      )}
+
+                      {/* Package Image */}
+                      <div className={`relative ${viewMode === 'list' ? 'w-48 h-32' : 'h-32'} bg-gray-100`}>
+                        <Image
+                          src={pkg.image}
+                          alt={pkg.name}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        {pkg.originalPrice && (
+                          <div className="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 text-xs font-semibold rounded">
+                            Save {Math.round(((parseFloat(pkg.originalPrice.replace(/[^0-9]/g, '')) - parseFloat(pkg.price.replace(/[^0-9]/g, ''))) / parseFloat(pkg.originalPrice.replace(/[^0-9]/g, ''))) * 100)}%
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Package Content */}
+                      <div className={`p-3 ${viewMode === 'list' ? 'flex-1' : 'flex-1 flex flex-col'}`}>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                            {pkg.category}
+                          </span>
+                          <div className="flex items-center space-x-1">
+                            <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                            <span className="text-xs font-medium">{pkg.rating}</span>
+                          </div>
+                        </div>
+
+                        <h3 className="text-sm font-semibold text-gray-900 mb-2 line-clamp-2">
+                          {pkg.name}
+                        </h3>
+
+                        <p className="text-gray-600 text-xs leading-relaxed mb-3 line-clamp-2">
+                          {pkg.description}
+                        </p>
+
+                        <div className="mb-3">
+                          <div className="flex items-baseline space-x-1">
+                            <span className="text-lg font-bold text-gray-900">{pkg.price}</span>
+                            {pkg.originalPrice && (
+                              <span className="text-xs text-gray-500 line-through">{pkg.originalPrice}</span>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col space-y-2 mt-auto">
+                          <button
+                            onClick={() => openModal(pkg)}
+                            className="w-full text-white hover:bg-blue-800 transition-colors py-2 px-3 text-xs font-medium"
+                            style={{backgroundColor: '#003153'}}
+                          >
+                            View Details
+                          </button>
+                          <a
+                            href={whatsappLink(whatsappMessage(pkg.name, pkg.price))}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full border border-gray-300 text-gray-700 text-center py-2 px-3 text-xs font-medium hover:bg-gray-50 transition-colors flex items-center justify-center space-x-1"
+                          >
+                            <MessageCircle className="w-3 h-3" />
+                            <span>Get Quote</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </ScrollAnimated>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-center mt-12 space-x-2">
+                  <button
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className={`px-4 py-2 text-sm font-medium border rounded-md transition-colors ${
+                      currentPage === 1
+                        ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
+                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    Previous
+                  </button>
+
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`px-4 py-2 text-sm font-medium border rounded-md transition-colors ${
+                        currentPage === page
+                          ? 'text-white border-gray-900'
+                          : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                      }`}
+                      style={currentPage === page ? {backgroundColor: '#003153'} : {}}
+                    >
+                      {page}
+                    </button>
+                  ))}
+
+                  <button
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                    className={`px-4 py-2 text-sm font-medium border rounded-md transition-colors ${
+                      currentPage === totalPages
+                        ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
+                        : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {filteredPackages.length === 0 && (
+            <div className="text-center py-16">
+              <p className="text-gray-500 text-lg">No packages found matching your criteria.</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <ScrollAnimated animationType="fade-in" threshold={0.1}>
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-4">
+              Can't Find What You're Looking For?
+            </h2>
+            <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+              We offer custom packages tailored to your specific needs and budget.
+              Contact us for a personalized consultation and quote.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a
+                href={whatsappLink("Hi Isma Design & Build! I'd like to discuss a custom package for my project.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:bg-blue-800 transition-colors px-8 py-4 font-medium inline-flex items-center justify-center space-x-2"
+                style={{backgroundColor: '#003153'}}
+              >
+                <MessageCircle className="w-5 h-5" />
+                <span>Get Custom Quote</span>
+              </a>
+              <Link
+                href="/contact"
+                className="border border-gray-300 text-gray-700 px-8 py-4 font-medium hover:bg-gray-50 transition-colors"
+              >
+                Schedule Consultation
+              </Link>
+            </div>
+          </div>
+        </section>
+      </ScrollAnimated>
+
+      {/* Package Details Modal */}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-[95vw] w-[95vw] md:max-w-[90vw] md:w-[90vw] lg:max-w-[85vw] lg:w-[85vw] xl:max-w-[80vw] xl:w-[80vw] max-h-[95vh] p-0 m-0 rounded-lg border-0 overflow-hidden">
+          {selectedPackage && (
+            <div className="h-full w-full flex flex-col max-h-[95vh]">
+              <DialogHeader className="flex-shrink-0 p-4 sm:p-6 md:p-8 lg:p-12 pb-2 sm:pb-4 md:pb-6">
+                <DialogTitle className="text-2xl md:text-3xl font-bold text-gray-900 text-center">
+                  {selectedPackage.name}
+                </DialogTitle>
+              </DialogHeader>
+
+              <div className="flex-1 overflow-y-auto px-4 sm:px-6 md:px-8 lg:px-12 pb-4 sm:pb-6 md:pb-8 lg:pb-12">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                {/* Left Column - Image and Basic Info */}
+                <div className="space-y-4 sm:space-y-6">
+                  {/* Package Image */}
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+                    <Image
+                      src={selectedPackage.image}
+                      alt={selectedPackage.name}
+                      fill
+                      className="object-cover"
+                    />
+                    {selectedPackage.featured && (
+                      <div className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-blue-500 text-white px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm font-semibold rounded">
+                        Most Popular
+                      </div>
+                    )}
+                    {selectedPackage.originalPrice && (
+                      <div className="absolute top-2 right-2 sm:top-4 sm:right-4 bg-red-500 text-white px-2 py-1 sm:px-3 sm:py-1 text-xs sm:text-sm font-semibold rounded">
+                        Save {Math.round(((parseFloat(selectedPackage.originalPrice.replace(/[^0-9]/g, '')) - parseFloat(selectedPackage.price.replace(/[^0-9]/g, ''))) / parseFloat(selectedPackage.originalPrice.replace(/[^0-9]/g, ''))) * 100)}%
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Package Details */}
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between flex-wrap gap-2">
+                      <span className="bg-gray-100 text-gray-800 px-3 py-1 text-sm font-medium rounded">
+                        {selectedPackage.category}
+                      </span>
+                      <div className="flex items-center space-x-2">
+                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                        <span className="text-sm font-medium">{selectedPackage.rating}</span>
+                        <span className="text-xs text-gray-500">({selectedPackage.reviews} reviews)</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-baseline space-x-3">
+                      <span className="text-3xl font-bold text-gray-900">{selectedPackage.price}</span>
+                      {selectedPackage.originalPrice && (
+                        <span className="text-xl text-gray-500 line-through">{selectedPackage.originalPrice}</span>
+                      )}
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <Clock className="w-5 h-5 text-gray-600" />
+                        <div>
+                          <div className="text-sm font-medium text-gray-900">Duration</div>
+                          <div className="text-sm text-gray-600">{selectedPackage.duration}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-3">
+                        <Users className="w-5 h-5 text-gray-600" />
+                        <div>
+                          <div className="text-sm font-medium text-gray-900">Suitable For</div>
+                          <div className="text-sm text-gray-600">{selectedPackage.suitableFor}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="space-y-3">
+                      <a
+                        href={whatsappLink(whatsappMessage(selectedPackage.name, selectedPackage.price))}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full text-white text-center py-3 px-6 text-base font-medium hover:bg-blue-800 transition-colors flex items-center justify-center space-x-2 rounded"
+                        style={{backgroundColor: '#003153'}}
+                      >
+                        <MessageCircle className="w-5 h-5" />
+                        <span>Get Quote via WhatsApp</span>
+                      </a>
+                      <Link
+                        href="/contact"
+                        className="w-full border border-gray-300 text-gray-700 text-center py-3 px-6 text-base font-medium hover:bg-gray-50 transition-colors block rounded"
+                      >
+                        Schedule Consultation
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column - Description, Includes, and Materials */}
+                <div className="space-y-6">
+                  {/* Description */}
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-4">Description</h3>
+                    <p className="text-gray-700 leading-relaxed text-base">{selectedPackage.description}</p>
+                  </div>
+
+                  {/* What's Included */}
+                  <div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                      <CheckCircle className="w-5 h-5 text-green-500 mr-2" />
+                      What's Included
+                    </h3>
+                    <ul className="space-y-3">
+                      {selectedPackage.includes.map((item, index) => (
+                        <li key={index} className="flex items-start">
+                          <CheckCircle className="w-4 h-4 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
+                          <span className="text-gray-700 text-sm leading-relaxed">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Materials */}
+                  {selectedPackage.materials && (
+                    <div>
+                      <h3 className="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                        <Package className="w-5 h-5 text-blue-500 mr-2" />
+                        Materials & Specifications
+                      </h3>
+                      <ul className="space-y-3">
+                        {selectedPackage.materials.map((material, index) => (
+                          <li key={index} className="flex items-start">
+                            <Award className="w-4 h-4 text-blue-500 mr-3 flex-shrink-0 mt-0.5" />
+                            <span className="text-gray-700 text-sm leading-relaxed">{material}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+    </div>
+  );
+}

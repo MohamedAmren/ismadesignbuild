@@ -24,93 +24,93 @@ import {
 
 const services = [
   {
-    id: "interior-design",
-    icon: Palette,
-    title: "Interior Design + Feng Shui (风水)",
-    description: "Design consultancy for residential, commercial, and office spaces with optional Feng Shui consultancy.",
-    fullDescription: "We provide design consultancy for residential, commercial, and office spaces. Our services include 2D layout plans, 3D artist impressions, elevation drawings, and optional Feng Shui consultancy to align your space with positive energy.",
-    image: "/images/Interior Design + Feng Shui (风水).jpg",
-    features: [
-      "2D layout plans",
-      "3D artist impressions",
-      "Elevation drawings",
-      "Optional Feng Shui consultancy",
-      "Positive energy alignment"
-    ]
-  },
-  {
-    id: "design-build",
-    icon: Building,
-    title: "Design & Build",
-    description: "A one-stop solution from concept to completion with in-house architectural design and construction.",
-    fullDescription: "A one-stop solution from concept to completion. With in-house capabilities, we handle architectural design, interior design consultancy, and full construction & project management.",
-    image: "/images/Design & Build.jpg",
-    features: [
-      "Architectural design",
-      "Interior design consultancy",
-      "Full construction & project management",
-      "Single point of contact",
-      "Seamless coordination"
-    ]
-  },
-  {
-    id: "construction",
+    id: "residential-design",
     icon: HomeIcon,
-    title: "Construction & Renovation",
-    description: "Quality construction and renovation for homes, offices, and commercial properties.",
-    fullDescription: "Whether it's new construction or renovation, we deliver quality work for homes, offices, and commercial properties. Services include demolition & rebuild, M&E works & piping, and painting & finishing touches.",
+    title: "Residential Design & Renovation",
+    description: "From apartments to landed homes, including kitchens, wardrobes, and living spaces.",
+    fullDescription: "Complete residential solutions from apartments to landed homes. We specialize in transforming living spaces including modern kitchens, custom wardrobes, comfortable bedrooms, and functional living areas that reflect your lifestyle and personality.",
     image: "/images/Construction & Renovation.jpg",
     features: [
-      "Demolition & rebuild",
-      "M&E works & piping",
-      "Painting & finishing touches",
-      "Quality workmanship",
-      "Professional execution"
+      "Apartment and landed home design",
+      "Kitchen design and renovation",
+      "Custom wardrobe solutions",
+      "Living space optimization",
+      "Bedroom and bathroom design"
     ]
   },
   {
-    id: "furniture",
+    id: "commercial-fitout",
+    icon: Building,
+    title: "Commercial & Office Fit-Out",
+    description: "Retail shops, cafés, restaurants, and corporate offices with branding-focused design.",
+    fullDescription: "Professional commercial spaces that reflect your brand identity. We create functional and attractive retail shops, welcoming cafés, stylish restaurants, and productive corporate offices that enhance customer experience and employee productivity.",
+    image: "/images/Design & Build.jpg",
+    features: [
+      "Retail shop design and fit-out",
+      "Café and restaurant interiors",
+      "Corporate office spaces",
+      "Brand-focused design approach",
+      "Customer experience optimization"
+    ]
+  },
+  {
+    id: "custom-carpentry",
     icon: Wrench,
-    title: "Custom Built-in Furniture",
-    description: "Tailored, high-quality carpentry solutions including wardrobes, kitchen cabinets, and TV consoles.",
-    fullDescription: "Tailored, high-quality carpentry solutions crafted by our experienced partners. We provide wardrobes, kitchen cabinets, TV consoles, and more, designed to match your style and functionality needs.",
+    title: "Custom Carpentry & Furniture",
+    description: "Wardrobes, kitchen cabinets, TV consoles, partitions, and decorative backdrops.",
+    fullDescription: "Bespoke carpentry solutions tailored to your space and needs. Our skilled craftsmen create custom wardrobes, kitchen cabinets, entertainment units, room partitions, and decorative backdrops using quality materials and precision techniques.",
     image: "/images/Custom Built-in Furniture.jpg",
     features: [
-      "Wardrobes",
-      "Kitchen cabinets",
-      "TV consoles",
-      "Custom designs",
-      "Quality craftsmanship"
+      "Custom wardrobes and storage",
+      "Kitchen cabinet systems",
+      "TV consoles and entertainment units",
+      "Room partitions and dividers",
+      "Decorative backdrops and features"
     ]
   },
   {
-    id: "flooring",
-    icon: Ruler,
-    title: "Flooring & Curtains",
-    description: "Complete your interior with a wide selection of flooring materials and window treatments.",
-    fullDescription: "Finishing solutions to complete your interior. Choose from a wide selection of flooring materials (tiles, vinyl, timber, etc.) and curtains & window treatments in various colors, textures, and patterns.",
+    id: "styling-decor",
+    icon: Palette,
+    title: "Styling & Décor",
+    description: "Soft furnishings, lighting, and final touches to complete the space.",
+    fullDescription: "The finishing touches that transform a space into a home or workplace. We carefully select and coordinate soft furnishings, lighting solutions, artwork, and decorative elements to create cohesive, inviting environments that reflect your taste and style.",
     image: "/images/Flooring & Curtains.jpg",
     features: [
-      "Flooring materials (tiles, vinyl, timber)",
-      "Curtains & window treatments",
-      "Various colors & textures",
-      "Quality finishes",
-      "Professional installation"
+      "Soft furnishings coordination",
+      "Lighting design and installation",
+      "Artwork and wall decorations",
+      "Decorative accessories",
+      "Color scheme coordination"
     ]
   },
   {
-    id: "authority",
+    id: "design-visualization",
     icon: PenTool,
-    title: "Local Authority Submission & Approval",
-    description: "We handle permit submissions and approvals to ensure your project complies with regulations.",
-    fullDescription: "We handle the necessary permit submissions and approvals with local authorities, ensuring your project runs smoothly and complies with regulations.",
+    title: "2D & 3D Design Visualization",
+    description: "Space planning, detailed layouts, and realistic renderings for a clear preview before build.",
+    fullDescription: "Bring your vision to life before construction begins. Our comprehensive visualization services include detailed space planning, precise 2D layouts, and photorealistic 3D renderings that allow you to see exactly how your space will look and function, ensuring complete satisfaction before any work starts.",
+    image: "/images/Interior Design + Feng Shui (风水).jpg",
+    features: [
+      "Detailed space planning and layouts",
+      "2D floor plans and elevations",
+      "Photorealistic 3D renderings",
+      "Virtual walkthroughs",
+      "Material and color visualization"
+    ]
+  },
+  {
+    id: "project-management",
+    icon: Wrench,
+    title: "Project Management & Renovation Works",
+    description: "Full on-site execution, scheduling, quality control, and coordination with contractors.",
+    fullDescription: "Complete project oversight from start to finish. Our experienced project managers handle all aspects of on-site execution, contractor coordination, timeline management, and quality control to ensure your project is delivered on time, on budget, and to the highest standards.",
     image: "/images/Local Authority Submission & Approval.jpg",
     features: [
-      "Permit submissions",
-      "Approval processing",
-      "Regulatory compliance",
-      "Smooth project execution",
-      "Expert guidance"
+      "Comprehensive project scheduling",
+      "On-site execution management",
+      "Quality control and inspections",
+      "Contractor coordination",
+      "Timeline and budget management"
     ]
   }
 ];
