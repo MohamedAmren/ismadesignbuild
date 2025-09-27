@@ -545,8 +545,9 @@ const recentPosts = [
   }
 ];
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
-  const post = blogData[params.slug as keyof typeof blogData];
+export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params;
+  const post = blogData[resolvedParams.slug as keyof typeof blogData];
   const [comments, setComments] = useState([
     {
       id: 1,
@@ -572,7 +573,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
     notFound();
   }
 
-  const currentIndex = allSlugs.indexOf(params.slug);
+  const currentIndex = allSlugs.indexOf(resolvedParams.slug);
   const previousPost = currentIndex > 0 ? allSlugs[currentIndex - 1] : null;
   const nextPost = currentIndex < allSlugs.length - 1 ? allSlugs[currentIndex + 1] : null;
 
@@ -989,7 +990,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 
             {/* Desktop: Grid layout, Mobile: Horizontal scroll */}
             <div className="md:grid md:grid-cols-3 md:gap-8 max-w-6xl mx-auto flex md:overflow-visible overflow-x-auto gap-6 pb-4 md:pb-0 packages-scroll">
-              {recentPosts.filter(recentPost => recentPost.slug !== params.slug).slice(0, 3).map((recentPost, index) => (
+              {recentPosts.filter(recentPost => recentPost.slug !== resolvedParams.slug).slice(0, 3).map((recentPost, index) => (
                 <ScrollAnimated
                   key={recentPost.id}
                   animationType={index % 2 === 0 ? 'slide-left' : 'slide-right'}
